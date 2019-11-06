@@ -215,3 +215,24 @@ body {
     margin: 5px;
     padding: 2px;
 }
+
+
+/*publicidad*/
+.container-pub {
+    position: relative;
+    margin-top: 45px;
+    width: 150px;
+}
+
+.container-banner {
+    position: absolute;
+    margin-top: 400px;
+    margin-left: 25px;
+}
+
+.btn-close-pub {
+    position: relative;
+    float: right;
+    background: rgba(255,255,255,0.5);
+    border-style: none;
+}

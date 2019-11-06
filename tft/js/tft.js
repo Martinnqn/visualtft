@@ -930,6 +930,12 @@ function hideAbout() {
     });
 }
 
+function hidePub(select) {
+    $('#'+select).css({
+        display:"none",
+    });
+}
+
 /*para que los div se acomoden al tamaño de la ventana*/
 $(window).resize(function () {
     $("#paper").width($(window).width());
