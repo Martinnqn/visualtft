@@ -36,10 +36,10 @@
                     <input type="text" id="txtSearchChamp" class="form-control" placeholder="Champion/Trait" onkeyup="highlightChampSearch(this)">
                 </div>
             </form>
-            <a href="#" onclick="showInstructions()" class="menubutton">Instructions<i class="material-icons md-light help-info">info</i></a>
+            <a href="#" onclick="showClassFromFoot('container-instructions')" class="menubutton">Instructions<i class="material-icons md-light help-info">info</i></a>
             <div class="menu-right">
-                <a href="#" onclick="showAbout()">About</a>
-                <a href="#" onclick="showContact()">Contact</a>
+                <a href="#" onclick="showClassFromFoot('container-about')">About</a>
+                <a href="#" onclick="showClassFromFoot('container-contact')">Contact</a>
             </div>
         </nav>
     </header>
@@ -70,12 +70,16 @@
                 </div>
             </div>
             <div id="info" class="container tab-pane fade">
-                <h5>Panel Info</h5>
+                <div class="header">
+                    <h5>Panel Info</h5>
+                    <span class="lang">Language</span><button id="change-lang" value="es" onclick="changeLanguage(this)"></button>
+                </div>
                 <div id="trait-info">
                     <div id="trait-type"></div>
                     <div id="trait-name"></div>
                     <img src="#" alt="trait" id="trait-img">
                     <div id="trait-body"></div>
+                    <div id="trait-sets"></div>
                 </div>
                 <div id="champ-info">
                     <div id="champ-header">
@@ -99,6 +103,11 @@
         </div>
     </div>
     <div class="container-fluid">
+        <div class="row">
+            <div id="paper" class="col-md-12"></div>
+        </div>
+    </div>
+    <div class="fake-foot">
         <div class="container-instructions">
             <h4>Instructions of use</h4>
             <ul>
@@ -109,22 +118,21 @@
                 <li>Click on background for delete the composition</li>
                 <li>Click on Center page button for center the page</li>
             </ul>
-            <button class="btn btn-primary btn-close" onclick="hideInstructions()">Close</button>
+            <button class="btn btn-primary btn-close" onclick="hideClassFromFoot('container-instructions')">Close</button>
         </div> 
         <div class="container-contact">
             <h4>Contact</h4>
             <ul>
                 <li>Mail: bermudez_martin.nqn@hotmail.com</li>
             </ul>
-            <button class="btn btn-primary btn-close" onclick="hideContact()">Close</button>
+            <button class="btn btn-primary btn-close" onclick="hideClassFromFoot('container-contact')">Close</button>
         </div>
         <div class="container-about">
             <h4>About this page</h4>
-            <p>tftgraph isn’t endorsed by Riot Games and doesn’t reflect the views or opinions of Riot Games or anyone officially involved in producing or managing League of Legends. League of Legends and Riot Games are trademarks or registered trademarks of Riot Games, Inc. League of Legends © Riot Games, Inc.</p>
-            <button class="btn btn-primary btn-close" onclick="hideAbout()">Close</button>
-        </div>
-        <div class="row">
-            <div id="paper" class="col-md-12"></div>
+            <p>This page is in beta.</p>
+            <p>TFT Visualization Graph isn’t endorsed by Riot Games and doesn’t reflect the views or opinions of Riot Games
+            or anyone officially involved in producing or managing League of Legends. League of Legends and Riot Games are trademarks or registered trademarks of Riot Games, Inc. League of Legends © Riot Games, Inc.</p>
+            <button class="btn btn-primary btn-close" onclick="hideClassFromFoot('container-about')">Close</button>
         </div>
     </div>
     <div id="container-banner" class="container-banner">

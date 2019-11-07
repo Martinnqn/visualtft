@@ -1,3 +1,5 @@
+var lang = "es"; //idioma de la informacion de champions y triats.
+
 //graph para el diagrama
 var graphMain = new joint.dia.Graph();
 //paper para manejar el graph diagrama
@@ -849,11 +851,17 @@ function showInfoTrait(element) {
     var body;
     var type;
     var img;
+    var sets;
     for (var i = infoTraits.length - 1; i >= 0; i--) {
         if (infoTraits[i].name==element.attr('label/text')){
-            body = infoTraits[i].desc;
+            if (lang=='es'){
+                body = infoTraits[i].desc.es;
+            }else{
+                body = infoTraits[i].desc.en;
+            }
             type = infoTraits[i].type;
             img = infoTraits[i].img;
+            sets = infoTraits[i].sets;
             break;
         }
     }
@@ -861,6 +869,7 @@ function showInfoTrait(element) {
     $('#trait-type').text(type);
     $("#trait-img").attr("src",img);
     $('#trait-body').text(body);
+    $('#trait-sets').text("sets: "+sets);
 }
 
 function showInfoChamp(element) {
@@ -894,38 +903,21 @@ function showInfoChamp(element) {
 ///////////////////////////////////////////////////
 ///////////////////////////////////////////////////
 
-function showInstructions() {
-    $('.container-instructions').css({
+
+function showClassFromFoot(cls) {
+    $('.fake-foot').css({
+        display:"block",
+    });
+    $('.'+cls).css({
         display:"block",
     });
 }
 
-function hideInstructions() {
-    $('.container-instructions').css({
+function hideClassFromFoot(cls) {
+    $('.fake-foot').css({
         display:"none",
     });
-}
-
-function showContact(){
-    $('.container-contact').css({
-        display:"block",
-    });   
-}
-
-function hideContact() {
-    $('.container-contact').css({
-        display:"none",
-    });
-}
-
-function showAbout(){
-    $('.container-about').css({
-        display:"block",
-    });   
-}
-
-function hideAbout() {
-    $('.container-about').css({
+    $('.'+cls).css({
         display:"none",
     });
 }
@@ -936,142 +928,250 @@ function hidePub(select) {
     });
 }
 
-/*para que los div se acomoden al tamaño de la ventana*/
-$(window).resize(function () {
-    $("#paper").width($(window).width());
-    $("#paper").height($(window).height());
-});
+function changeLanguage(input) {
+    if (input.value=='es'){
+        lang = 'en';
+    }else{
+        lang = 'es';
+    }
+    input.value = lang;
+    input.textContent = lang;
+}
 
 infoTraits = [
 {
     "name": "Crystal",
     "img": "imgs/elements_origins/crystal.png",
-    "desc": "Desplegar a varios campeones de cristal les establece un límite máximo de daño que pueden recibir de un solo ataque o habilidad.",
+    "desc": {
+        "es": "Desplegar a varios campeones de cristal les establece un límite máximo de daño que pueden recibir de un solo ataque o habilidad.",
+        "en": "Deploying multiple Crystal champions grants them a maximum amount of damage they can take from a single attack or ability hit.",
+    },
+    "sets": [2, 4],
     "type": "Element"
 },{
     "name": "Electric",
     "img": "imgs/elements_origins/electric.png",
-    "desc": "Desplegar a varios campeones eléctricos hace que inflijan daño a los enemigos adyacentes cada vez que asesten o reciban un golpe crítico.",
+    "desc": {
+        "es": "Desplegar a varios campeones eléctricos hace que inflijan daño a los enemigos adyacentes cada vez que asesten o reciban un golpe crítico.",
+        "en": "Deploying multiple Electric champions causes them to damage adjacent enemies whenever they critically strike or are critically struck.",
+    },
+    "sets": [2, 3, 4],
     "type": "Element"
 },{
     "name": "Glacial",
     "img": "imgs/elements_origins/glacial.png",
-    "desc": "Desplegar a varios campeones glaciales hace que haya una probabilidad de que sus ataques aturdan al objetivo. Esta probabilidad aumenta en función del número de campeones glaciales.",
+    "desc": {
+        "es": "Desplegar a varios campeones glaciales hace que haya una probabilidad de que sus ataques aturdan al objetivo. Esta probabilidad aumenta en función del número de campeones glaciales.",
+        "en": "Deploying multiple Glacial champions grants their attacks a chance to stun their target, increasing with more Glacials.",
+    },
+    "sets": [2, 4, 6],
     "type": "Element"
 },{
     "name": "Inferno",
     "img": "imgs/elements_origins/inferno.png",
-    "desc": "Desplegar a varios campeones infernales hace que sus habilidades quemen temporalmente el suelo bajo sus objetivos, lo que inflige daño a los enemigos que se encuentren en el fuego. El daño aumenta cuantos más campeones infernales haya.",
+    "desc": {
+        "es": "Desplegar a varios campeones infernales hace que sus habilidades quemen temporalmente el suelo bajo sus objetivos, lo que inflige daño a los enemigos que se encuentren en el fuego. El daño aumenta cuantos más campeones infernales haya.",
+        "en": "Deploying multiple Inferno champions causes their abilities to temporarily ignite the ground beneath their targets, damaging enemies standing in the fire. Damage increases with more Inferno champions.",
+    },
+    "sets": [3, 6, 9],
     "type": "Element"
 },{
     "name": "Poison",
     "img": "imgs/elements_origins/poison.png",
-    "desc": "Desplegar a varios campeones venenosos provoca que sus ataques y habilidades de daño aumenten el coste de maná de las habilidades de sus enemigos.",
+    "desc": {
+        "es": "Desplegar a varios campeones venenosos provoca que sus ataques y habilidades de daño aumenten el coste de maná de las habilidades de sus enemigos.",
+        "en": "Deploying mutliple Poison champions causes their damaging attacks and abilities to increase the mana costs of their targets' abilities.",
+    },
+    "sets": [3],
     "type": "Element"
 },{
     "name": "Desert",
     "img": "imgs/elements_origins/desert.png",
-    "desc": "Desplegar a varios campeones del desierto reduce la armadura del equipo enemigo. La reducción aumenta si se despliegan más campeones del desierto.",
+    "desc": {
+        "es": "Desplegar a varios campeones del desierto reduce la armadura del equipo enemigo. La reducción aumenta si se despliegan más campeones del desierto.",
+        "en": "Deploying multiple Desert champions reduces the enemy team's armor. The reduction increases if more Desert champions are deployed.",
+    },
+    "sets": [2, 4],
     "type": "Element"
 },{
     "name": "Light",
     "img": "imgs/elements_origins/light.png",
-    "desc": "Desplegar a varios campeones radiantes hace que, cuando mueran, curen a otros campeones radiantes un porcentaje de su vida máxima y les otorguen velocidad de ataque durante el resto de la ronda (se acumula con cada asesinato de campeones radiantes). La curación y el aumento de velocidad de ataque son mayores en función del número de campeones radiantes que haya desplegados.",
+    "desc": {
+        "es": "Desplegar a varios campeones radiantes hace que, cuando mueran, curen a otros campeones radiantes un porcentaje de su vida máxima y les otorguen velocidad de ataque durante el resto de la ronda (se acumula con cada asesinato de campeones radiantes). La curación y el aumento de velocidad de ataque son mayores en función del número de campeones radiantes que haya desplegados.",
+        "en": "Deploying multiple Light champions causes them to, on death, heal other Light champions for a percentage of their max health and grant them attack speed for the remainer of the round (stacking with multiple Light champion deaths). Heal and attack speed increse with more Light champions.",
+    },
+    "sets": [3, 6, 9],
     "type": "Element"
 },{
     "name": "Mountain",
     "img": "imgs/elements_origins/mountain.png",
-    "desc": "Desplegar a varios campeones de montaña concede un enorme escudo a un aliado aleatorio al comienzo del combate.",
+    "desc": {
+        "es": "Desplegar a varios campeones de montaña concede un enorme escudo a un aliado aleatorio al comienzo del combate.",
+        "en": "Deploying multiple Mountain champions grants a massive shield to a random ally at the start of combat.",
+    },
+    "sets": [2],
     "type": "Element"
 },{
     "name": "Ocean",
     "img": "imgs/elements_origins/ocean.png",
-    "desc": "Desplegar a varios campeones de océano otorga maná de forma periódica a los aliados. La cantidad aumenta con el número de campeones de océano.",
+    "desc": {
+        "es": "Desplegar a varios campeones de océano otorga maná de forma periódica a los aliados. La cantidad aumenta con el número de campeones de océano.",
+        "en": "Deploying multiple Ocean champions periodically grants allies mana. The amount increases with more Ocean champions.",
+    },
+    "sets": [2, 4, 6],
     "type": "Element"
 },{
     "name": "Shadow",
     "img": "imgs/elements_origins/shadow.png",
-    "desc": "Desplegar a varios campeones de sombra hace que inflijan más daño durante los primeros segundos del combate, así como durante unos segundos tras la muerte de un enemigo. Desplegar a más campeones de sombra hace que el daño de todos aumente cuando cualquiera de ellos participe en un asesinato.",
+    "desc": {
+        "es": "Desplegar a varios campeones de sombra hace que inflijan más daño durante los primeros segundos del combate, así como durante unos segundos tras la muerte de un enemigo. Desplegar a más campeones de sombra hace que el daño de todos aumente cuando cualquiera de ellos participe en un asesinato.",
+        "en": "Deploying multiple Shadow champions causes them to deal increased damage for the first few seconds of combat, as well as for a few seconds when they score a takedown. Deploying more Shadow champions causes all of them to deal increased damage when any of them score a takedown.",
+    },
+    "sets": [2, 4],
     "type": "Element"
 },{
     "name": "Wind",
     "img": "imgs/elements_origins/wind.png",
-    "desc": "Desplegar a los campeones de viento otorga probabilidad de esquivar a vuestro equipo.",
+    "desc": {
+        "es": "Desplegar a los campeones de viento otorga probabilidad de esquivar a vuestro equipo.",
+        "en": "Deploying multiple Cloud champions grants your team dodge chance. The dodge chance increases if more Cloud champions are deployed.",
+    },
+    "sets": [2, 3, 4],
     "type": "Element"
 },{
     "name": "Woodland",
-    "img": "imgs/elements_origins/forest.png",
-    "desc": "Desplegar a varios campeones de bosque hace que uno aleatorio de ellos cree una copia de sí mismo (incluidos los objetos) al comienzo del combate.",
+    "img": "imgs/elements_origins/woodland.png",
+    "desc": {
+        "es": "Desplegar a varios campeones de bosque hace que uno aleatorio de ellos cree una copia de sí mismo (incluidos los objetos) al comienzo del combate.",
+        "en": "Deploying multiple Woodland champions causes one of them to randomly create a clone of themselves (including items) at the start of combat.",
+    },
+    "sets": [3],
     "type": "Element"
 },{
     "name": "Steel",
     "img": "imgs/elements_origins/steel.png",
-    "desc": "Desplegar a varios campeones de acero hace que se vuelvan inmunes al daño brevemente cuando bajen del 50 % de vida.",
+    "desc": {
+        "es": "Desplegar a varios campeones de acero hace que se vuelvan inmunes al daño brevemente cuando bajen del 50 % de vida.",
+        "en": "Deploying multiple Steel champions causes them to briefly become immune to damage when they drop below 50% health.",
+    },
+    "sets": [2, 3, 4],
     "type": "Element"
 },{
     "name": "Avatar",
     "img": "imgs/elements_origins/avatar.png",
-    "desc": "El elemento del avatar cuenta dos veces para las bonificaciones de los atributos.",
+    "desc": {
+        "es": "El elemento del avatar cuenta dos veces para las bonificaciones de los atributos.",
+        "en": "An Avatar's element is counted twice for trait bonuses.",
+    },
+    "sets": [1],
     "type": "Clase"
 },{
     "name": "Ranger",
     "img": "imgs/elements_origins/ranger.png",
-    "desc": "Desplegar a varios cazadores otorga, de forma periódica, una probabilidad de obtener una mejora de velocidad de ataque. Dicha probabilidad aumenta con más cazadores.",
+    "desc": {
+        "es": "Desplegar a varios cazadores otorga, de forma periódica, una probabilidad de obtener una mejora de velocidad de ataque. Dicha probabilidad aumenta con más cazadores.",
+        "en": "Deploying multiple Rangers periodically grants them a chance to gain a burst of attack speed, increasing with more Rangers.",
+    },
+    "sets": [2, 4, 6],
     "type": "Clase"
 },{
     "name": "Summoner",
     "img": "imgs/elements_origins/summoner.png",
-    "desc": "Desplegar a varios invocadores aumenta la vida y la duración de los aliados que invocan, lo que aumenta con el número de invocadores. \nLas invocaciones se benefician de las bonificaciones de elemento y de clase, pero no cuentan como unidades adicionales para activar niveles más altos de dichas bonificaciones.",
+    "desc": {
+        "es": "Desplegar a varios invocadores aumenta la vida y la duración de los aliados que invocan, lo que aumenta con el número de invocadores. \nLas invocaciones se benefician de las bonificaciones de elemento y de clase, pero no cuentan como unidades adicionales para activar niveles más altos de dichas bonificaciones.",
+        "en": "Deploying multiple Summoners increases the health and duration of their spawned allies, increasing with more Summoners. Summoners' pets benefit from Element and Class bonuses, but don't count as additional units toward activiating higher levels of those bonuses.",
+    },
+    "sets": [3, 6],
     "type": "Clase"
 },{
     "name": "Alchemist",
     "img": "imgs/elements_origins/alchemist.png",
-    "desc": "Los alquimistas pueden moverse a través de otras unidades y nunca dejan de moverse.",
+    "desc": {
+        "en": "Passive: Alchemists move through other units and never stop moving.",
+        "es": "Pasiva: Los alquimistas pueden moverse a través de otras unidades y nunca dejan de moverse."
+    },
+    "sets": [1],
     "type": "Clase"
 },{
     "name": "Assassin",
     "img": "imgs/elements_origins/assassin.png",
-    "desc": "Los asesinos se desplazan sigilosamente por el campo de batalla al principio del combate y se colocan en el lugar opuesto a donde empezaron. \nDesplegar a varios asesinos les otorga probabilidad de impacto crítico y aumenta el daño de impacto crítico, lo que aumenta con más asesinos.",
+    "desc": {
+        "es": "Pasiva: Los asesinos se desplazan sigilosamente por el campo de batalla al principio del combate y se colocan en el lugar opuesto a donde empezaron. \n Activa: Desplegar a varios asesinos les otorga probabilidad de impacto crítico y aumenta el daño de impacto crítico, lo que aumenta con más asesinos.",
+        "en": "Passive: Assassins sneak across the battlefield at the start of combat, placing themselves opposite from where they started.\n Active: Deploying multiple Assassins grant them critical strike chance and increased critical strike damage, increasing with more Assassins.",
+    },
+    "sets": [3, 6],
     "type": "Clase"
 },{
     "name": "Mystic",
     "img": "imgs/elements_origins/mystic.png",
-    "desc": "Desplegar a varios místicos otorga resistencia mágica a todos los aliados, lo que aumenta con más místicos.",
+    "desc": {
+        "es": "Desplegar a varios místicos otorga resistencia mágica a todos los aliados, lo que aumenta con más místicos.",
+        "en": "Deploying multiple Mystics grants all allies magic resist, increasing with more Mystics.",
+    },
+    "sets": [2, 4],
     "type": "Clase"
 },{
     "name": "Blademaster",
     "img": "imgs/elements_origins/blademaster.png",
-    "desc": "Desplegar a varios espadachines hace que haya una probabilidad de que sus ataques impacten varias veces. Esta probabilidad aumenta en función del número de espadachines.",
+    "desc": {
+        "es": "Desplegar a varios espadachines hace que haya una probabilidad de que sus ataques impacten varias veces. Esta probabilidad aumenta en función del número de espadachines.",
+        "en": "Deploying multiple Blademasters grants their attacks a chance to hit extra times, increasing with more Blademasters.",
+    },
+    "sets": [2, 4, 6],
     "type": "Clase"
 },{
     "name": "Mage",
     "img": "imgs/elements_origins/mage.png",
-    "desc": "Desplegar a varios magos les otorga una probabilidad de lanzar su habilidad dos veces. Esta probabilidad aumenta con más magos.",
+    "desc": {
+        "es": "Desplegar a varios magos les otorga una probabilidad de lanzar su habilidad dos veces. Esta probabilidad aumenta con más magos.",
+        "en": "Deploying multiple Mages grants them a chance after casting an ability to cast it again. This chance increases with more Mages.",
+    },
+    "sets": [3, 6],
     "type": "Clase"
 },{
     "name": "Warden",
     "img": "imgs/elements_origins/warden.png",
-    "desc": "Desplegar a varios centinelas les otorga armadura, que aumenta con más centinelas.",
+    "desc": {
+        "es": "Desplegar a varios centinelas les otorga armadura, que aumenta con más centinelas.",
+        "en": "Deploying multiple Wardens grants them armor, increasing with more Wardens.",
+    },
+    "sets": [2, 4, 6],
     "type": "Clase"
 },{
     "name": "Berserker",
     "img": "imgs/elements_origins/berserker.png",
-    "desc": "Desplegar a varios berserkers otorga a sus ataques una probabilidad de infligir daño en un cono tras el objetivo. La probabilidad aumenta con más berserkers.",
+    "desc": {
+        "es": "Desplegar a varios berserkers otorga a sus ataques una probabilidad de infligir daño en un cono tras el objetivo. La probabilidad aumenta con más berserkers.",
+        "en": "Passive: At the start of combat, Berserkers leap to the nearest enemy. \nActive: Deploying multiple Berserkers grants their attacks a chance to deal damage in a cone behind the target. The chance increases with more Berserkers.",
+    },
+    "sets": [3, 6],
     "type": "Clase"
 },{
     "name": "Druid",
     "img": "imgs/elements_origins/druid.png",
-    "desc": "Desplegar a dos druidas otorga a todos los druidas regeneración de vida.",
+    "desc": {
+        "es": "Desplegar a dos druidas otorga a todos los druidas regeneración de vida.",
+        "en": "Deploying two Druids grants all Druids health regeneration.",
+    },
+    "sets": [2],
     "type": "Clase"
 },{
     "name": "Predator",
     "img": "imgs/elements_origins/predator.png",
-    "desc": "Desplegar a varios depredadores hace que sus ataques y habilidades ejecuten inmediatamente a los enemigos con poca vida.",
+    "desc": {
+        "es": "Desplegar a varios depredadores hace que sus ataques y habilidades ejecuten inmediatamente a los enemigos con poca vida.",
+        "en": "Deploying multiple Predators causes their attacks and abilities to immediately kill low-health enemies.",
+    },
+    "sets": [3],
     "type": "Clase"
 },{
     "name": "Variable",
     "img": "imgs/elements_origins/variable.png",
-    "desc": "",
+    "desc": {
+        "es": "",
+        "en": "",
+    },
+    "sets": [1],
     "type": "Clase"
 }
 ]
@@ -1082,8 +1182,8 @@ json = [{
     "elements": ["Crystal"],
     "name": "Skarner",
     "ability": {
-        "name": "NoInfo",
-        "desc": "NoInfo"
+        "name": "Crystalline Exoskeleton",
+        "desc": "Skarner shields himself for a few seconds, gaining bonus attack speed while the shield holds."
     },
     "class": ["Predator"]
 }, {
@@ -1432,8 +1532,8 @@ json = [{
     "elements": ["Ocean"],
     "name": "Nami",
     "ability": {
-        "name": "NoInfo",
-        "desc": "NoInfo"
+        "name": "Tidal Wave",
+        "desc": "Nami sends a massive wave toward a random enemy, damaging and knocking up enemies it passes through and granting allies it passes through bonus magic damage on hit."
     },
     "class": ["Mystic"]
 }, {
@@ -1502,8 +1602,8 @@ json = [{
     "elements": ["Shadow"],
     "name": "Master Yi",
     "ability": {
-        "name": "NoInfo",
-        "desc": "NoInfo"
+        "name": "Meditate",
+        "desc": "Master Yi becomes untargetable and significantly heals himself over a few seconds. After channeling, his attacks temporarily deal bonus magic damage on hit."
     },
     "class": ["Mystic", "Blademaster"]
 }, {
@@ -1591,4 +1691,12 @@ json = [{
 $("#paper").ready(function(){
   loadGraph();
   $("#txtSearchChamp").val('');
+  $('#change-lang').text('es');
+});
+
+
+/*para que los div se acomoden al tamaño de la ventana*/
+$(window).resize(function () {
+    $("#paper").width($(window).width());
+    $("#paper").height($(window).height());
 });
